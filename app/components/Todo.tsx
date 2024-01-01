@@ -16,7 +16,7 @@ const Todo = ({ todo }: TodoProps) => {
     setIsEditing(!isEditing);
 
     if (isEditing) {
-      const response = await fetch(`${API_URL}/editTodo/${todo.id}`, {
+      const response = await fetch(`${API_URL}/todo/${todo.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -35,7 +35,7 @@ const Todo = ({ todo }: TodoProps) => {
   };
 
   const handleDelete = async (id: number) => {
-    const response = await fetch(`${API_URL}/deleteTodo/${todo.id}`, {
+    const response = await fetch(`${API_URL}/todo/${todo.id}`, {
       method: "DELETE",
     });
 
@@ -45,14 +45,16 @@ const Todo = ({ todo }: TodoProps) => {
     }
   };
 
-  const toggleTodoCompletion = async (id: number, isCompleted: boolean) => {
-    const response = await fetch(`${API_URL}/editTodo/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        isCompleted: !isCompleted,
-      }),
+  const toggleTodoCompletion = async (id: number, done: boolean) => {
+    const method = done ? "DELETE" : "PUT";
+
+    console.log(done, method);
+
+    const response = await fetch(`${API_URL}/todo/${id}/done`, {
+      method: method,
     });
+
+    console.log(response);
 
     if (response.ok) {
       const editedTodo = await response.json();
@@ -71,8 +73,8 @@ const Todo = ({ todo }: TodoProps) => {
             id="todo1"
             name="todo1"
             type="checkbox"
-            checked={todo.isCompleted ? true : false}
-            onChange={() => toggleTodoCompletion(todo.id, todo.isCompleted)}
+            checked={todo.done ? true : false}
+            onChange={() => toggleTodoCompletion(todo.id, todo.done)}
             className="h-4 w-4 text-teal-600 focus:ring-teal-500
           border-gray-300 rounded"
           />
@@ -87,7 +89,7 @@ const Todo = ({ todo }: TodoProps) => {
             ) : (
               <span
                 className={`text-lg font-medium mr-2 ${
-                  todo.isCompleted ? "line-through" : ""
+                  todo.done ? "line-through" : ""
                 }`}
               >
                 {" "}
@@ -101,13 +103,13 @@ const Todo = ({ todo }: TodoProps) => {
             onClick={handleEdit}
             className="duration-150 bg-green-600 hover:bg-green-700 text-white font-medium py-1 px-2 rounded"
           >
-            {isEditing ? "Save" : "✒"}
+            {isEditing ? "Save" : "🖊"}
           </button>
           <button
             onClick={() => handleDelete(todo.id)}
             className="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-2 rounded"
           >
-            ✖
+            ✘
           </button>
         </div>
       </div>

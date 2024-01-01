@@ -16,7 +16,7 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(`${API_URL}/createTodo`, {
+    const response = await fetch(`${API_URL}/todo`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -36,7 +36,7 @@ export default function Home() {
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-32 py-4 px-4">
       <div className="px-4 py-2">
         <h1 className="text-gray-800 font-bold text-2xl uppercase">
-          To-Do List
+          Simple Todo List
         </h1>
       </div>
       <form
