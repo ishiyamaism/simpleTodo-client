@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Simple Todo List",
-  description: "共有TODOリストです",
+  title: "Public Todo List",
+  description: "誰にでも使える公開TODOリスト",
 };
 
 export default function RootLayout({

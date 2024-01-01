@@ -101,13 +101,13 @@ const Todo = ({ todo }: TodoProps) => {
         <div className="flex items-center space-x-2">
           <button
             onClick={handleEdit}
-            className="duration-150 bg-green-600 hover:bg-green-700 text-white font-medium py-1 px-2 rounded"
+            className="duration-300 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow-md transition ease-in-out transform hover:-translate-y-1"
           >
             {isEditing ? "Save" : "🖊"}
           </button>
           <button
             onClick={() => handleDelete(todo.id)}
-            className="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-2 rounded"
+            className="duration-300 bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-4 rounded-lg shadow-md transition ease-in-out transform hover:-translate-y-1"
           >
             ✘
           </button>
