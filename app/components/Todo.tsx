@@ -1,8 +1,10 @@
 import { API_URL } from "@/staticValues/url";
 import { useState } from "react";
+import { FaEdit, FaSave } from "react-icons/fa";
+import { RiDeleteBin2Line } from "react-icons/ri";
 import { useTodos } from "../hooks/useTodos";
 import { TodoType } from "../types";
-
+import { formatDate } from "../utils/formatDate";
 type TodoProps = {
   todo: TodoType;
 };
@@ -16,13 +18,16 @@ const Todo = ({ todo }: TodoProps) => {
     setIsEditing(!isEditing);
 
     if (isEditing) {
-      const response = await fetch(`${API_URL}/todo/${todo.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: editedTitle,
-        }),
-      });
+      const response = await fetch(
+        `https://02.kaizentools.net/api:18082/todo/${todo.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: editedTitle,
+          }),
+        }
+      );
 
       if (response.ok) {
         const editedTodo = await response.json();
@@ -47,8 +52,6 @@ const Todo = ({ todo }: TodoProps) => {
 
   const toggleTodoCompletion = async (id: number, done: boolean) => {
     const method = done ? "DELETE" : "PUT";
-
-    console.log(done, method);
 
     const response = await fetch(`${API_URL}/todo/${id}/done`, {
       method: method,
@@ -87,29 +90,34 @@ const Todo = ({ todo }: TodoProps) => {
                 className="border rounded py-1 px-2"
               />
             ) : (
-              <span
-                className={`text-lg font-medium mr-2 ${
-                  todo.done ? "line-through" : ""
-                }`}
-              >
-                {" "}
-                {todo.title}{" "}
-              </span>
+              <>
+                <div
+                  className={`text-lg font-medium mr-2 ${
+                    todo.done ? "line-through" : ""
+                  }`}
+                >
+                  {todo.title}
+                </div>
+                <div className="text-gray-400 text-sm font-extralight">
+                  created: {formatDate(new Date(todo.created_at))}
+                </div>
+              </>
             )}
           </label>
         </div>
         <div className="flex items-center space-x-2">
           <button
             onClick={handleEdit}
-            className="duration-300 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow-md transition ease-in-out transform hover:-translate-y-1"
+            className="duration-300 hover:bg-gray-200 py-2 px-2 rounded-md border"
           >
-            {isEditing ? "Save" : "🖊"}
+            {isEditing ? <FaSave /> : <FaEdit />}
           </button>
+
           <button
             onClick={() => handleDelete(todo.id)}
-            className="duration-300 bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-4 rounded-lg shadow-md transition ease-in-out transform hover:-translate-y-1"
+            className="duration-300  hover:bg-gray-200    py-2 px-2 rounded-md border"
           >
-            ✘
+            <RiDeleteBin2Line />
           </button>
         </div>
       </div>
