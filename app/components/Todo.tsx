@@ -99,7 +99,7 @@ const Todo = ({ todo }: TodoProps) => {
                   {todo.title}
                 </div>
                 <div className="text-gray-400 text-sm font-extralight">
-                  created: {formatDate(new Date(todo.created_at))}
+                  {formatDate(new Date(todo.created_at))}
                 </div>
               </>
             )}
