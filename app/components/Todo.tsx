@@ -1,5 +1,6 @@
 import { API_URL } from "@/staticValues/url";
 import { useState } from "react";
+import { CiClock1 } from "react-icons/ci";
 import { FaEdit, FaSave } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useTodos } from "../hooks/useTodos";
@@ -19,7 +20,7 @@ const Todo = ({ todo }: TodoProps) => {
 
     if (isEditing) {
       const response = await fetch(
-        `https://02.kaizentools.net/api:18082/todo/${todo.id}`,
+        `https://02.kaizentools.net/api/todo/${todo.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -57,8 +58,6 @@ const Todo = ({ todo }: TodoProps) => {
       method: method,
     });
 
-    console.log(response);
-
     if (response.ok) {
       const editedTodo = await response.json();
       const updatedTodos = todos.map((todo: TodoType) =>
@@ -73,15 +72,31 @@ const Todo = ({ todo }: TodoProps) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <input
-            id="todo1"
-            name="todo1"
+            id={`todo1${todo.id}`}
             type="checkbox"
             checked={todo.done ? true : false}
             onChange={() => toggleTodoCompletion(todo.id, todo.done)}
-            className="h-4 w-4 text-teal-600 focus:ring-teal-500
-          border-gray-300 rounded"
+            className="hidden" // チェックボックスを非表示にする
           />
-          <label className="ml-3 block text-gray-900">
+          <label
+            htmlFor={`todo1${todo.id}`}
+            className="flex items-center cursor-pointer"
+          >
+            <div className="w-4 h-4 flex justify-center items-center mr-2">
+              {/* カスタムチェックボックス */}
+              <div
+                className={`rounded-full border-2 ${
+                  todo.done ? "bg-slate-500" : "border-slate-500"
+                } w-4 h-4 flex items-center justify-center`}
+              >
+                {/* チェックされたときに表示されるアイコン */}
+                {todo.done ? (
+                  <div className="rounded-full bg-blue-500 w-2 h-2"></div>
+                ) : null}
+              </div>
+            </div>
+          </label>
+          <div className="flex flex-col">
             {isEditing ? (
               <input
                 value={editedTitle}
@@ -98,12 +113,12 @@ const Todo = ({ todo }: TodoProps) => {
                 >
                   {todo.title}
                 </div>
-                <div className="text-gray-400 text-sm font-extralight">
-                  {formatDate(new Date(todo.created_at))}
+                <div className="flex items-center gap-1 text-gray-400 text-xs font-extralight font-mono ">
+                  <CiClock1 /> {formatDate(new Date(todo.created_at))}
                 </div>
               </>
             )}
-          </label>
+          </div>
         </div>
         <div className="flex items-center space-x-2">
           <button
@@ -115,7 +130,7 @@ const Todo = ({ todo }: TodoProps) => {
 
           <button
             onClick={() => handleDelete(todo.id)}
-            className="duration-300  hover:bg-gray-200    py-2 px-2 rounded-md border"
+            className="duration-300 hover:bg-gray-200 py-2 px-2 rounded-md border"
           >
             <RiDeleteBin2Line />
           </button>

@@ -1,3 +1,4 @@
+import { SiteDescription, SiteTitle } from "@/staticValues/info";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -5,8 +6,16 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Public Todo List",
-  description: "誰にでも使える公開TODOリスト",
+  title: SiteTitle,
+  description: SiteDescription,
+  twitter: {
+    card: "summary_large_image",
+    title: SiteTitle,
+    description: SiteDescription,
+    site: "@kaizen_keikaku",
+    creator: "@ishiyamaism",
+    images: "/profile.png",
+  },
 };
 
 export default function RootLayout({

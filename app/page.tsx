@@ -1,6 +1,8 @@
 "use client";
 
+import { SiteTitle } from "@/staticValues/info";
 import { API_URL } from "@/staticValues/url";
+import Image from "next/image";
 import { useRef } from "react";
 import { MdPlaylistAdd } from "react-icons/md";
 import Todo from "./components/Todo";
@@ -36,10 +38,17 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-32 py-4 px-4">
-      <div className="px-4 py-2">
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-16 py-4 px-4">
+      <div className="px-4 py-2 flex flex-row items-center ">
+        <Image
+          src="/profile.png"
+          width={45}
+          height={45}
+          alt="profile"
+          className="rounded-full mr-3"
+        />
         <h1 className="text-gray-800 font-bold text-2xl uppercase">
-          Public Todo List
+          {SiteTitle}
         </h1>
       </div>
       <form
@@ -54,7 +63,7 @@ export default function Home() {
             ref={inputRef}
           />
           <button
-            className="duration-300 flex-shrink-0 text-xl hover:bg-gray-300 p-2 rounded-lg border"
+            className="flex-shrink-0 text-xl hover:bg-gray-300 p-2 rounded-lg border"
             type="submit"
           >
             <MdPlaylistAdd />
