@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-16 py-4 px-4">
-      <div className="px-4 py-2 flex flex-row items-center ">
+      <div className="padding-normal flex flex-row items-center ">
         <Image
           src="/profile.png"
           width={45}

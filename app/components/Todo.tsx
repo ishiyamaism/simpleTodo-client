@@ -1,7 +1,7 @@
 import { API_URL } from "@/staticValues/url";
 import { useState } from "react";
 import { CiClock1 } from "react-icons/ci";
-import { FaEdit, FaSave } from "react-icons/fa";
+import { FaClock, FaEdit, FaSave } from "react-icons/fa";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useTodos } from "../hooks/useTodos";
 import { TodoType } from "../types";
@@ -115,6 +115,9 @@ const Todo = ({ todo }: TodoProps) => {
                 </div>
                 <div className="flex items-center gap-1 text-gray-400 text-xs font-extralight font-mono ">
                   <CiClock1 /> {formatDate(new Date(todo.created_at))}
+                </div>
+                <div className="flex items-center gap-1 text-gray-400 text-xs font-extralight font-mono ">
+                  <FaClock /> {formatDate(new Date(todo.updated_at))}
                 </div>
               </>
             )}
